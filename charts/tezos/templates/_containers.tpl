@@ -160,10 +160,10 @@
       name: config-volume
     - mountPath: /var/tezos
       name: var-volume
-  readinessProbe:
-    httpGet:
-      path: /is_synced
-      port: 31732
+  # readinessProbe:
+  #   httpGet:
+  #     path: /is_synced
+  #     port: 31732
 {{- end }}
 {{- end }}
 

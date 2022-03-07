@@ -9,6 +9,13 @@ ln -s /var/tezos/client /home/tezos/.tezos-client
 # the listen-addr may not yet be bound causing tezos-node to fail.
 # So, we try a few times with increasing delays:
 
+# rm -rf /var/tezos/node
+# rm -rf /var/tezos/client
+
+# rm -rf /etc/tezos/config.json
+
+# exit 0
+
 for d in 1 1 5 10 20 60 120; do
 	/usr/local/bin/tezos-node run				\
 			--bootstrap-threshold 0			\
