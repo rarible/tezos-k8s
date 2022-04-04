@@ -166,6 +166,7 @@
   #     port: 31732
 {{- end }}
 {{- end }}
+{{- end }}
 
 {{- define "tezos.container.tezedge" }}
 {{- if eq (include "tezos.getNodeImplementation" $) "tezedge" }}
@@ -354,6 +355,7 @@ Also start endorser for protocols that need it.
 {{- end }}
 
 {{- define "tezos.container.sidecar" }}
+{{- if or (not (hasKey $.node_vals "readiness_probe")) $.node_vals.readiness_probe }}
 - command:
     - python
   args:
@@ -363,6 +365,7 @@ Also start endorser for protocols that need it.
   image: {{ .Values.tezos_k8s_images.utils }}
   imagePullPolicy: IfNotPresent
   name: sidecar
+{{- end }}
 {{- end }}
 
 {{- define "tezos.container.zerotier" }}
