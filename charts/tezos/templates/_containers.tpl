@@ -166,7 +166,6 @@
   #     port: 31732
 {{- end }}
 {{- end }}
-{{- end }}
 
 {{- define "tezos.container.tezedge" }}
 {{- if eq (include "tezos.getNodeImplementation" $) "tezedge" }}

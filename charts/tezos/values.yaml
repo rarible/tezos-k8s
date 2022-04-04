@@ -8,7 +8,7 @@ is_invitation: false
 
 # Images not part of the tezos-k8s repo go here
 images:
-  octez: tezos/tezos:v12-release
+  octez: tezos/tezos:v12.2
   tezedge: tezedge/tezedge:v1.6.8
 # Images that are part of the tezos-k8s repo go here with 'dev' tag
 tezos_k8s_images:
@@ -98,15 +98,6 @@ accounts:
 ##      automatically for you.
 ## - "node_selector": Specify a kubernetes node selector in 'key: value' format
 ##     for your tezos nodes.
-## - "readiness_probe": Attach a probe to the node. The probe checks whether
-##                    the most recent block is recent enough. If not, the
-##                    services will be unreachable. Defaults to True.
-##                    True is good for RPC nodes, private nodes, and
-##                    self-contained private chains.
-##                    Recommended to set to False when bootstrapping a new
-##                    chain with external bakers, such as a new test chain.
-##                    Otherwise, the chain may become unreachable externally
-##                    while waiting for other nodes to come online.
 ## - "instances": a list of nodes to fire up, each is a dictionary defining:
 ##    - "bake_using_account": Account name that should be used for baking.
 ##    - "bake_using_accounts": List of account names that should be used for baking.
@@ -235,18 +226,21 @@ expected_proof_of_work: 1
 node_config_network:
   chain_name: rariblenet
   genesis:
-    timestamp: "2022-03-02T20:00:00Z"
+    timestamp: "2022-04-02T20:00:00Z"
     block: BLockGenesisGenesisGenesisGenesisGenesisf79b5d1CoW2
     protocol: Ps9mPmXaRzmzk35gbAYNCAw6UXdE2qoABTHbN2oEEc1qM7CwT9P
   # The name of the account who's public key will be set downstream in
   # config.json at `network.genesis_parameters.values.genesis_pubkey`.
   activation_account_name: baker0
+  user_activated_upgrades:
+    - level: 16
+      replacement_protocol: Psithaca2MLRFYargivpo7YvUr7wUDqyxrdhC5CQq78mRvimz6A
 #
 ## For joining a public network:
 ## - If specifying the name of the network, the network's name must be
 ##   recognized by the docker image passed as .Values.images.octez above.
 ## - Additionally, you can pass a url that returns the config.json of the
-##   network. Example: "https://teztnets.xyz/mondaynet". In general you
+##   network. Example: "https://teztnets.xyz/granadanet". In general you
 ##   shouldn't need this and should just specifiy the network's name.
 
 
@@ -257,7 +251,9 @@ protocols:
   # You may want to run two or more if you are expecting an on-chain upgrade.
   # Be mindful that running more protocols will start more containers in your
   # pods which may consume more memory.
+  - command: 012-Psithaca
   - command: 011-PtHangz2
+
   #- command: alpha
 
 ## Activate a new chain from genesis. Uncommenting this will create an
@@ -274,7 +270,7 @@ activation:
     blocks_per_commitment: 4
     blocks_per_roll_snapshot: 4
     blocks_per_voting_period: 64
-    time_between_blocks: ["5", "10"]
+    time_between_blocks: ["10", "20"]
     endorsers_per_block: 32
     hard_gas_limit_per_operation: "800000"
     hard_gas_limit_per_block: "8000000"
@@ -293,7 +289,7 @@ activation:
     initial_endorsers: 1
     delay_per_missing_endorsement: "1"
     baking_reward_per_endorsement: ["200000", "20000"]
-    minimal_block_delay: "2"
+    minimal_block_delay: "5"
     liquidity_baking_subsidy: "0"
     liquidity_baking_sunset_level: 525600
     liquidity_baking_escape_ema_threshold: 100000
