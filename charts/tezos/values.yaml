@@ -6,6 +6,11 @@ is_invitation: false
 #   zerotier_network: YOUR_NETWORK_ID_HERE
 #   zerotier_token: YOUR_ZEROTIER_TOKEN_HERE
 
+monitoring:
+  enabled: false
+service:
+  nodePort: 30307
+
 # Images not part of the tezos-k8s repo go here
 images:
   octez: tezos/tezos:v12.2
